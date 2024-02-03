@@ -54,7 +54,7 @@ const addmilkProduction = catchAsyncError(async (req, res, next) => {
       )
     );
   }
-
+  req.body.fullName = farmer.fullName;
   req.body.farmerId = farmer._id;
   req.body.province = farmer.province;
   req.body.district = farmer.district;
