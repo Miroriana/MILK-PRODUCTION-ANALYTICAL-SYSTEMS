@@ -96,7 +96,7 @@
 /**
  * @swagger
 
- * /mpas/mcc/deleteMcc:
+ * /mpas/milkProduction/deleteMilkProduction:
  *   delete:
  *     summary: removing a milkProduction
  *     tags:

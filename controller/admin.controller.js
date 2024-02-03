@@ -38,7 +38,7 @@ const addVeterian = catchAsyncError(async (req, res, next) => {
     var addedVeterinary = await VeterinaryModel.create(req.body);
     var senderEmail = addedVeterinary.email;
     var subject = "Finished signing up your account";
-    signUpLink = `<p> <h3>Hello Veterinary! </h3>Welcome to our Team!! Here are your credentials<br> User email: ${addedVeterinary.email} <br> Password: ${defaultPassword}  <br>  <br>   </p> <a href="http://localhost:4000/api/UH/v1/user/auth/signup">Sign in to continue</a>`;
+    signUpLink = `<p> <h3>Hello Veterinary! </h3>Welcome to our Team!! Here are your credentials<br> User email: ${addedVeterinary.email} <br> Password: ${defaultPassword}  <br>  <br>   </p> <a href="http://localhost:5173/login">Sign in to continue</a>`;
     sendEmail(senderEmail, subject, signUpLink);
 
     res.status(201).json({
@@ -49,7 +49,7 @@ const addVeterian = catchAsyncError(async (req, res, next) => {
     });
   }
 });
-
+// removing a certain veterinary
 const removeVeterinary = async (req, res, next) => {
   const { email, ...rest } = req.body;
   try {
@@ -62,7 +62,7 @@ const removeVeterinary = async (req, res, next) => {
         message: "Veterinary is Deleted",
       });
       var receiver = deletedVeterinary.body.email;
-      var theme = "Finished signing up your account";
+      var theme = "Finished deleting up your account";
       var message = `<p>Hello <h3>${deletedVeterinary.fullName}</h3> </p> <br> You are no have been dismissed from your post`;
       sendEmail(receiver, theme, message);
     } else {
