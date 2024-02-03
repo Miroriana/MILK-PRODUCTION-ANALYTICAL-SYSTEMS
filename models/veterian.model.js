@@ -13,6 +13,11 @@ const mccSchema = new Schema({
       "Please provide a valid email",
     ],
   },
+  nationalId: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
   phoneNumber: {
     type: String,
     required: true,
@@ -21,10 +26,6 @@ const mccSchema = new Schema({
   password: {
     type: String,
     required: true,
-    match: [
-      /(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-      "Please provide a valid password",
-    ],
   },
   province: {
     type: String,

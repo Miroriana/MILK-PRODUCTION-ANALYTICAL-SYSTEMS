@@ -8,16 +8,17 @@ const {
   generateUserRandomPassword,
 } = require("../utility/generateRandomPassword");
 const MccUserModel = require("../models/mccUser.model");
+const MccModel = require("../models/veterian.model");
 
 //add farmer for the first time
 const addFarmer = catchAsyncError(async (req, res, next) => {
-  const mccUserEmail = req.user.email;
+  const mccEmail = req.user.email;
 
-  const mccUser = await MccUserModel.findOne({
-    email: mccUserEmail,
+  const mcc = await MccModel.findOne({
+    email: mccEmail,
   });
 
-  if (!mccUser) {
+  if (!mcc) {
     return next(
       new errorHandler(400, `Access Denied. You are not authorized.`)
     );
@@ -29,9 +30,9 @@ const addFarmer = catchAsyncError(async (req, res, next) => {
       .status(200)
       .json({ message: "Farmer with this email already exists" });
   else {
-    req.body.province = mccUser.province;
-    req.body.district = mccUser.district;
-    req.body.sector = mccUser.sector;
+    req.body.province = mcc.province;
+    req.body.district = mcc.district;
+    req.body.sector = mcc.sector;
 
     let defaultPassword = generateUserRandomPassword();
     let hashedPwd = bcryptjs.hashSync(defaultPassword, 10);

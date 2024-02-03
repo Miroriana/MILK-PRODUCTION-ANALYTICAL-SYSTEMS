@@ -1,76 +1,62 @@
 //registering the mcc
 // const { UserSigninSchema } = require("../utils/validation");
-const FarmerModel = require("../models/farmer.model");
+const VeterinaryModel = require("../models/admin.model");
+const bcryptjs = require("bcryptjs");
 const MccModel = require("../models/veterian.model");
+const { catchAsyncError } = require("../utility/catchSync");
+const {
+  generateUserRandomPassword,
+} = require("../utility/generateRandomPassword");
+const sendEmail = require("../utils/email");
+const { errorHandler } = require("../utility/errorHandlerClass");
 
-const addMcc = async (req, res, next) => {
-  const { mccName, ...rest } = req.body;
-  //   try {
-  //     var mccExists = await MccModel.findOne({ fullName: req.body.fullName });
-  //     if (mccExists) {
-  //       return res
-  //         .status(200)
-  //         .json({ message: "mcc with this name already exists" });
+const addMcc = catchAsyncError(async (req, res, next) => {
+  const veterinaryEmail = req.user.email;
 
-  //     // }else if{
-  //     //   var mccExists = await mccModel.findOne({ email: email });
-  //     // if (emailExists)
-  //     //   return res
-  //     //     .status(200)
-  //     //     .json({ message: "Farmer with this email already exists" });
-  //     }else {
-  //       var addedMcc = await MccModel.create(req.body);
-  //       res.status(201).json({
-  //         message: "mcc is recorded successfully",
-  //         mcc: addedMcc,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     next(new errorHandler(500, error.message));
-  //   }
-  // };
-  
-  const farmerEmail = req.user.email;
-
-  const farmer = await FarmerModel.findOne({
-    email: farmerEmail,
+  const veterinary = await VeterinaryModel.findOne({
+    email: veterinaryEmail,
   });
-  if (!farmer) {
+
+  if (!veterinary) {
     return next(
-      new errorHandler(400, `Access Denied. You are not authorized.`)
+      new errorHandler(`Access Denied. You are not authorized.`, 400)
     );
   }
-  try {
-    // Check if an Mcc with the given fullName already exists
-    var mccExists = await MccModel.findOne({ mccName: req.body.mccName });
+  const { email, ...rest } = req.body;
+  var mccExists = await MccModel.findOne({ email: req.body.email });
+  if (mccExists) {
+    return next(
+      new errorHandler(
+        300,
+        `mcc with this email:${req.body.email} already exists.`
+      )
+    );
+  } else {
+    req.body.province = veterinary.province;
+    req.body.district = veterinary.district;
 
-    if (mccExists) {
-      return res
-        .status(200)
-        .json({ message: "Mcc with this name already exists" });
-    } else {
-      // Check if an Mcc with the given email already exists
-      var emailExists = await MccModel.findOne({ email: req.body.email });
+    let defaultPassword = generateUserRandomPassword();
+    let hashedPwd = bcryptjs.hashSync(defaultPassword, 10);
 
-      if (emailExists) {
-        return res
-          .status(200)
-          .json({ message: "Mcc with this email already exists" });
-      } else {
-        // Create a new Mcc if none of the conditions are met
-        var addedMcc = await MccModel.create(req.body);
+    console.log("defaultPassword---", defaultPassword);
 
-        res.status(201).json({
-          message: "Mcc is recorded successfully",
-          mcc: addedMcc,
-        });
-      }
-    }
-  } catch (error) {
-    // Handle errors
-    next(new errorHandler(500, error.message));
+    req.body.password = hashedPwd;
+    req.body.role = "mccUser";
+
+    var addedMcc = await MccModel.create(req.body);
+    // sending email codes
+    var senderEmail = addedMcc.email;
+    var subject = "Finished signing up your account";
+    signUpLink = `<p> <h3>Hello Veterinary! </h3>Welcome to our Team!! Here are your credentials<br> User email: ${addedMcc.email} <br> Password: ${addedMcc.password}  </p> <a href="http://localhost:4000/api/UH/v1/user/auth/signup">Sign in to continue</a>`;
+    sendEmail(senderEmail, subject, signUpLink);
+
+    res.status(201).json({
+      message: "mccUser is recorded successfully, email is sent to the mcc",
+      MCC: addedMcc,
+      defaultPassword,
+    });
   }
-};
+});
 const removeMcc = async (req, res, next) => {
   const { email, ...rest } = req.body;
   try {

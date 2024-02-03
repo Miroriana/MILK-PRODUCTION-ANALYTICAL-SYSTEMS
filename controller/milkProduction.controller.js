@@ -4,6 +4,7 @@ const { errorHandler } = require("../utility/errorHandlerClass");
 const FarmerModel = require("../models/farmer.model");
 const { catchAsyncError } = require("../utility/catchSync");
 const MccUserModel = require("../models/mccUser.model");
+const MccModel = require("../models/veterian.model");
 
 // Add milk production record
 //const addmilkProduction = async (req, res, next) => {
@@ -31,7 +32,7 @@ const MccUserModel = require("../models/mccUser.model");
 const addmilkProduction = catchAsyncError(async (req, res, next) => {
   const mccEmail = req.user.email;
 
-  const mcc = await MccUserModel.findOne({
+  const mcc = await MccModel.findOne({
     email: mccEmail,
   });
 

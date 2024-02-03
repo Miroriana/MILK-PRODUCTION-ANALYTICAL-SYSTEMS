@@ -1,4 +1,4 @@
-const { UserModel, MccModel } = require("../models/user.model");
+const { UserModel } = require("../models/user.model");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncWrapper = require("../middlewares/async");
@@ -15,7 +15,7 @@ const VeterinaryModel = require("../models/admin.model");
 const { errorHandler } = require("../utility/errorHandlerClass");
 const { catchAsyncError } = require("../utility/catchSync");
 const FarmerModel = require("../models/farmer.model");
-const MccUserModel = require("../models/mccUser.model");
+const MccModel = require("../models/veterian.model");
 
 //sign up admin
 
@@ -62,7 +62,7 @@ const SignIn = catchAsyncError(async (req, res, next) => {
     if (!validUser) {
       validUser = await FarmerModel.findOne({ email: email });
       if (!validUser) {
-        validUser = await MccUserModel.findOne({ email: email });
+        validUser = await MccModel.findOne({ email: email });
 
         if (!validUser)
           return next(new errorHandler(401, "Invalid email or password"));

@@ -1,17 +1,20 @@
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     mcc:
  *       type: object
  *       required:
  *         - mccName
  *         - email
+ *         - nationalId
  *         - phoneNumber
- *         - password
- *         - district
  *         - sector
- *         - description
  *       properties:
  *         mccName:
  *           type: string
@@ -19,23 +22,20 @@
  *         email:
  *           type: string
  *           description: Email of the MCC
+ *         nationalId:
+ *           type: string
+ *           description: nationalId of the MCC
  *         phoneNumber:
  *           type: string
  *           description: Phone number of the MCC
- *         password:
- *           type: string
- *           description: Password of the MCC
- *         district:
- *           type: string
- *           description: District of the MCC
  *         sector:
  *           type: string
  *           description: Sector of the MCC
  */
 
-/** 
+/**
  * @swagger
- * tags: 
+ * tags:
  *   - name: Mcc
  *     description: The mcc managing API
  * /mpas/mcc/listOfMcc:
@@ -46,16 +46,16 @@
  *     responses:
  *       200:
  *         description: This is the mcc list
- *         content: 
+ *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/mcc'
  */
-/** 
+/**
  * @swagger
- * tags: 
+ * tags:
  *   - name: Mcc
  *     description: The Mcc managing API
  * /mpas/mcc/addMcc:
@@ -63,6 +63,8 @@
  *     summary: Create a Mcc
  *     tags:
  *       - Mcc
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -72,13 +74,13 @@
  *     responses:
  *       200:
  *         description: This mcc is created
- *         content: 
+ *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/mcc'
  *       500:
  *         description: Some server error
-*/
+ */
 
 /**
  * @swagger
@@ -183,9 +185,10 @@ const {
   findMcc,
   listMcc,
 } = require("../controller/veterinary.controller");
+const { verifyToken } = require("../middlewares/tokenVerification");
 const mccRouter = express.Router();
 
-mccRouter.post("/addMcc", addMcc);
+mccRouter.post("/addMcc", verifyToken, addMcc);
 mccRouter.delete("/deleteMcc", removeMcc);
 mccRouter.patch("/updateMcc", updateMcc);
 mccRouter.get("/findMcc", findMcc);
