@@ -1,0 +1,19 @@
+{
+  "email": "email1@example.com",
+  "password": "myPassword!"
+}
+
+{
+  "email": "ve@example.com",
+  "password": "Umwana_Umugabo2022!UbuzimaBwiza@Inzira"
+}
+
+{
+  "email": "mcc@example.com",
+  "password": "Inshuti_Nyirabukwe&UmugoreUmugabo"
+}
+
+{
+  "email": "farm@example.com",
+  "password": "IbyizaByose_Umugabo!Icyiciro"
+}
