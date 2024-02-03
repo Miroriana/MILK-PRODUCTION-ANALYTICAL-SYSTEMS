@@ -21,7 +21,7 @@
  * tags:
  *   - name: milkProduction
  *     description: The milkProduction managing API
- * /mpas/mcc/listOfMcc:
+ * /mpas/milkProduction/allMilkProductions:
  *   get:
  *     summary: List of all milkProduction
  *     tags:
@@ -65,7 +65,7 @@
 
 /**
  * @swagger
- * /mpas/mcc/updateMcc:
+ * /mpas/milkProduction/updateMilkProduction:
  *   patch:
  *     summary: Update milkProduction
  *     tags:
@@ -127,7 +127,7 @@
 
 /**
  * @swagger
- * /mpas/mcc/findMcc:
+ * /mpas/milkProduction/findMilkProduction:
  *   get:
  *     summary:  Find milkProduction by ID
  *     tags:
