@@ -39,6 +39,10 @@ const mccSchema = new Schema({
     type: String,
     required: true,
   },
+  role:{
+    type : String ,
+    default: "mcc",
+  }
 });
 const MccModel = model("mcc", mccSchema);
 module.exports = MccModel;

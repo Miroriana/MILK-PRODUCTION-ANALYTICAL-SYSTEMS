@@ -15,6 +15,7 @@
  *         - nationalId
  *         - phoneNumber
  *         - sector
+ *         - role
  *       properties:
  *         mccName:
  *           type: string
@@ -31,6 +32,10 @@
  *         sector:
  *           type: string
  *           description: Sector of the MCC
+ *         role:
+ *           type: string
+ *           description: role of the MCC
+ *           example: "mcc"
  */
 
 /**
