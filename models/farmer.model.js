@@ -48,12 +48,7 @@ const farmerSchema = new Schema({
     type: String,
     required: true,
   },
-  currentQuantity: {
-    type: Number,
-    default: 0,
-    required: false,
-  },
-  totalQuantity: {
+  quantity: {
     type: Number,
     default: 0,
     required: false,

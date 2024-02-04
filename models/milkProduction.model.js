@@ -7,12 +7,7 @@ const milkSchema = new Schema(
       ref: "farmer",
       required: false,
     },
-    farmerName:{
-      type: Schema.Types.String,
-      ref: "farmer",
-      required: false,
-    },
-    currentQuantity: {
+    quantity: {
       type: Number,
       required: true,
       unique: false,

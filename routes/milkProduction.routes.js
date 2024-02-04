@@ -6,15 +6,15 @@
  *       type: object
  *       required:
  *         - email
- *         - currentQuantity
+ *         - quantity
  *       properties:
  *         email:
  *           type: string
  *           description: email of the farmer
  *           example: farmer@example.com
- *         currentQuantity:
+ *         quantity:
  *           type: number
- *           description:  current Quantity of milk production
+ *           description: Quantity of milk production
  */
 /**
  * @swagger
