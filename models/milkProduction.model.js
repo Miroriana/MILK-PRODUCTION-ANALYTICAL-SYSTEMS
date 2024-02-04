@@ -12,7 +12,7 @@ const milkSchema = new Schema(
       ref: "farmer",
       required: false,
     },
-    quantity: {
+    currentQuantity: {
       type: Number,
       required: true,
       unique: false,
