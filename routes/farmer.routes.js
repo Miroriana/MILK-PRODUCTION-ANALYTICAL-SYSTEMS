@@ -10,13 +10,13 @@
  *     Farmer:
  *       type: object
  *       required:
- *         - name
+ *         - farmerName
  *         - email
  *         - phoneNumber
  *         - nationalId
  *         - verified
  *       properties:
- *         name:
+ *         farmerName:
  *           type: string
  *           description: Name of the farmer
  *           example: John Farmer

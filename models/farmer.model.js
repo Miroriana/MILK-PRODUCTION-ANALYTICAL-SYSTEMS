@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 // farmer model
 const farmerSchema = new Schema({
-  name: {
+  farmerName: {
     type: String,
     require: true,
   },
