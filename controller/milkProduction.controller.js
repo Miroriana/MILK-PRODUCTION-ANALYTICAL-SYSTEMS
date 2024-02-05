@@ -133,6 +133,7 @@ const listOfmilkProduction = async (req, res, next) => {
     res.json({
       message: "this is the milkProduction list",
       milkProduction,
+      farmerProduction,
     });
   } catch (error) {
     res.status(500).send("you don't have any milkProduction in the list");
