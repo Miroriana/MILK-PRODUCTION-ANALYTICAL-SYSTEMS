@@ -62,13 +62,14 @@ const addmilkProduction = catchAsyncError(async (req, res, next) => {
 
   const milkProducts = await milkProductionModel.create({
     farmerId: farmer._id,
+    farmerName: farmer.farmerName,
     mccId: mcc._id,
     quantity: req.body.quantity,
     province: mcc.province,
     district: mcc.district,
     sector: mcc.sector
   });
-  
+
   farmer.currentQuantity = req.body.quantity;
   farmer.quantity = farmer.quantity + req.body.quantity;
   await farmer.save();
@@ -127,6 +128,7 @@ const findmilkProductionById = async (req, res, next) => {
 //listing or the farmers recorded
 const listOfmilkProduction = async (req, res, next) => {
   var milkProduction = await milkProductionModel.find();
+  var farmerProduction =await FarmerModel.find();
   try {
     res.json({
       message: "this is the milkProduction list",
