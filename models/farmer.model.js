@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 // farmer model
 const farmerSchema = new Schema({
-  fullName: {
+  name: {
     type: String,
     require: true,
   },
@@ -52,6 +52,12 @@ const farmerSchema = new Schema({
     type: Number,
     default: 0,
     required: false,
+  },
+  currentQuantity:{
+    type: Number,
+    default: 0,
+    required: false,
+
   },
   role: {
     type: String,

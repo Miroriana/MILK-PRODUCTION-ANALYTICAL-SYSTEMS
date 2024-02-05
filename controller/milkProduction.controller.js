@@ -54,14 +54,14 @@ const addmilkProduction = catchAsyncError(async (req, res, next) => {
       )
     );
   }
-  req.body.fullName = farmer.fullName;
+  req.body.name = farmer.name;
   req.body.farmerId = farmer._id;
   req.body.province = farmer.province;
   req.body.district = farmer.district;
   req.body.sector = farmer.sector;
 
   const milkProducts = await milkProductionModel.create(req.body);
-
+  farmer.currentQuantity = req.body.quantity;
   farmer.quantity = farmer.quantity + req.body.quantity;
   await farmer.save();
 

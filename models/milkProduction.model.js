@@ -7,6 +7,11 @@ const milkSchema = new Schema(
       ref: "farmer",
       required: false,
     },
+    mccId :{
+      type: Schema.Types.ObjectId,
+      ref: "mcc",
+      required: false,
+    },
     quantity: {
       type: Number,
       required: true,
