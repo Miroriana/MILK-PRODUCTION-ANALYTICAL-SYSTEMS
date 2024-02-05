@@ -44,5 +44,6 @@ const mccSchema = new Schema({
     default: "mcc",
   }
 });
+
 const MccModel = model("mcc", mccSchema);
 module.exports = MccModel;
